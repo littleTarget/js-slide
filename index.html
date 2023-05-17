@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 500px;
+      }
+
+      ul {
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+
+      ul li {
+        list-style: none;
+        width: 10px;
+        height: 10px;
+        background-color: #f1f1f1;
+        margin-right: 10px;
+        border-radius: 5px;
+      }
+
+      ul li.active {
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="Slide">
+      <img src="./images/slider01.jpg" />
+      <ul>
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <button class="prev">&lt;&lt;</button>
+      <button class="next">>></button>
+    </div>
+    <script>
+      let i = 1;
+
+      let lis = document.querySelectorAll('li');
+
+      const SlideHandle = () => {
+        if (i > lis.length) i = 1;
+        if (i <= 0) i = lis.length - 1;
+
+        document.querySelector('.active').classList.remove('active');
+        lis[i - 1].classList.add('active');
+
+        document.querySelector('img').src = `./images/slider0${i}.jpg`;
+      };
+
+      const prevHandle = () => {
+        i--;
+        SlideHandle();
+      };
+
+      const nextHandle = () => {
+        i++;
+        SlideHandle();
+      };
+
+      let timeID = setInterval(nextHandle, 1000);
+
+      document.querySelector('.prev').addEventListener('click', prevHandle);
+
+      document.querySelector('.next').addEventListener('click', nextHandle);
+
+      document
+        .querySelector('.Slide')
+        .addEventListener('mouseenter', () => clearInterval(timeID));
+
+      document
+        .querySelector('.Slide')
+        .addEventListener(
+          'mouseleave',
+          () => (timeID = setInterval(nextHandle, 1000))
+        );
+    </script>
+  </body>
+</html>
